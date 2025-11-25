@@ -23,7 +23,7 @@ Then the function $g(\cdot)$ is **approximate**-submodular and monotone.
 
 **Sketch of proof**  From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, 
 Consider the ratio 
-$    \frac{I(Z;Y_A) }{ I(X_e; Y_A )}=  1 - \frac{H(X_e) - H(Z) - H(X_e|Z, Y_A)}{ I(X_e; Y_A )}$. 
+$\frac{I(Z;Y_A) }{ I(X_e; Y_A )}=  1 - \frac{H(X_e) - H(Z) - H(X_e|Z, Y_A)}{ I(X_e; Y_A )}$. 
 
 It can be shown that $H(X_e) - H(Z) - H(X_e|Z, Y_A) = I(X_e; Y_A|Z)$  when $Z$ is a deterministic function of $X_e$, (by expanding $I(X_e; Y_A | Z)$ and use the fact that $H(Z|X_e)=0$).
 
