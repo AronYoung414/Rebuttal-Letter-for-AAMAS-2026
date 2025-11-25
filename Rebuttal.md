@@ -15,10 +15,9 @@ We thank the reviewer for the thoughtful and detailed feedback, and for recogniz
 when selecting a subset of agents (K), the *other* agents still act according to their policies and participate in the transition dynamics, but  their observations are excluded from the inference objective. For example, suppose the system has 5 agents and a subset (K={1,2,4}) of agents are used for active joint state estimation, all 5 agents execute their respective policies and evolve under the joint transition model, while only the observation histories of agents 1,2,4 are used for the perception objective, that is, computing the joint-state trajectory estimation  using the agents 1,2,4's observations. 
 We will clarify this more explicitly in Section 3.
 
-* [Revised Proof of Lemma 3] We appreciate the reviewer pointing out the issue in the proof of Lemma 3.
+* [Revised Proof of Lemma 6] We appreciate the reviewer pointing out the issue in the proof of Lemma 6.
 
-We provide the corrected lemma and proof sketch as follows: Lemma 3: ... $
-g(Y_A) \coloneqq I(Z; Y_A).$
+We provide the corrected lemma and proof sketch as follows: Lemma 6: ... $g(Y_A) \coloneqq I(Z; Y_A).$
 Then the function $g(\cdot)$ is **approximate**-submodular and monotone.
 
 **Sketch of proof**  From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, 
@@ -28,14 +27,17 @@ $\frac{I(Z;Y_A) }{ I(X_e; Y_A )}=  1 - \frac{H(X_e) - H(Z) - H(X_e|Z, Y_A)}{ I(X
 It can be shown that $H(X_e) - H(Z) - H(X_e|Z, Y_A) = I(X_e; Y_A|Z)$  when $Z$ is a deterministic function of $X_e$, (by expanding $I(X_e; Y_A | Z)$ and use the fact that $H(Z|X_e)=0$).
 
 Let $\epsilon = \max_{Y_A} \frac{I(X_e; Y_A|Z)}{ I(X_e; Y_A )} $. The constant $\epsilon \in (0,1]$ and usually strictly smaller than $1$ when any observation can reveal some information about $Z$. $\epsilon=1$ only when the observation and $Z$ are independent.  
-Then, we can derive an upper and lower bound on  $I(Z; Y_A )$ such that  $$  I(X_e; Y_A )  \ge I(Z; Y_A ) \ge (1- \epsilon)I(X_e; Y_A ),$$
-In other words, $I(Z; Y_A)$ is approximate submodular. (A function $f(S)$ is $\epsilon$-approximate submodular if there is a submodular function $g(S)$ and $\epsilon>0$ such that $(1-\epsilon) g(S)\le f(S) \le (1+\epsilon)g(S)$ for any subset $S$).
+Then, we can derive an upper and lower bound on  $I(Z; Y_A )$:  $$I(X_e; Y_A )  \ge I(Z; Y_A ) \ge (1- \epsilon)I(X_e; Y_A ),$$
+where $I(X_e; Y_A )  \ge I(Z; Y_A )$ is due to data processing inequality. We can further loosen the upper bound to 
+ $$(1+\epsilon) I(X_e; Y_A )  \ge I(Z; Y_A ) \ge (1- \epsilon)I(X_e; Y_A ),$$
 
-Based on the approximate submodularity, Ref. [1] show that the greedy algorithm achieves a 
+In other words, $I(Z; Y_A)$ is $\epsilon$-approximate submodular. (A function $f(S)$ is $\epsilon$-approximate submodular if there is a submodular function $g(S)$ and $\epsilon>0$ such that $(1-\epsilon) g(S)\le f(S) \le (1+\epsilon)g(S)$ for any subset $S$).
+
+Based on the approximate submodularity, Ref. [1] shows that the greedy algorithm achieves a 
 $\left(1 - \frac{1}{e} - O(\delta)\right)$ approximation 
 ratio when $\epsilon = \frac{\delta}{k}$ where $k$ is the number of elements selected.
 
-We will revise this lemma and pointed out that in the inference of secret case, the performance bound can be achieved using the greedymax algorithm.
+We will revise this lemma. The submodularity using IMAS$^2$ for secret inference will be derived using the approximate-submodularity. Theorem 1's performance bound can be applied to inferring state trajectories. We will add a remark on the secret inference case. 
 
 * We thank the reviewer for raising this point.
 In our grid-world model, a sensor returns the *exact* robot location whenever detection occurs (under zero observation noise). Thus, increasing the sensing range increases the probability of detection and therefore always increases information gain. We will clarify this modeling assumption and note that saturation effects may occur in settings where observations are noisy or ambiguous.
@@ -60,7 +62,7 @@ We thank the reviewer for highlighting the limitations of our empirical section 
   * the MI/entropy values (our main theoretical metric) are interpretable (within $[0, 1]$) under binary uncertainty.
 Nevertheless, we agree that richer tasks (multi-class labels, multi-target tracking, or continuous latent variables) would better demonstrate generality. We will expand the discussion and include this limitation explicitly.
 * We agree additional baselines strengthen empirical context.
-However, algorithms in [6,7] assume reward-based or value-based objectives, or centralized belief updates, which are not compatible with our *information-theoretic* objective and decentralized constraint. Still, we can include the comparison with:
+However, algorithms in [2,3] assume reward-based or value-based objectives, or centralized belief updates, which are not compatible with our *information-theoretic* objective and decentralized constraint. Still, we can include the comparison with:
   * a random subset selector,
   * a visibility/coverage-based selector, and
   * a fixed-location MI-ranking baseline,
@@ -86,21 +88,12 @@ These specifications will allow meaningful comparison against IPG and other base
     
 
 ## References
-[1] Thibaut Horel and Yaron Singer. Maximization of approximately submodular functions. In Advances In Neural Information Processing Systems, pages 3045–3053, 2016.
-
-Raphen Becker, Shlomo Zilberstein, Victor Lesser, and Claudia V. Goldman. 2004. Solving transition independent decentralized Markov decision processes. J. Artif. Int. Res. 22, 1 (July 2004), 423–455.
-
-[2] Ranjit Nair, Pradeep Varakantham, Milind Tambe, and Makoto Yokoo. 2005. Networked distributed POMDPs: a synergy of distributed constraint optimization and POMDPs. In Proceedings of the 19th international joint conference on Artificial intelligence (IJCAI'05). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 1758–1760.
-
-[3] Frans A. Oliehoek and Christopher Amato. 2016. A Concise Introduction to Decentralized POMDPs (1st. ed.). Springer Publishing Company, Incorporated.
-
-[4] Bai, W. &amp; Bilmes, J.. (2018). Greed is Still Good: Maximizing Monotone Submodular+Supermodular (BP) Functions. <i>Proceedings of the 35th International Conference on Machine Learning</i>, in <i>Proceedings of Machine Learning Research</i> 80:304-313 Available from https://proceedings.mlr.press/v80/bai18a.html.
-
-[5] Horel, T. and Singer, Y. Maximization of approximately submodular functions. In Advances In Neural Information Processing
+[1] Horel, T. and Singer, Y. Maximization of approximately submodular functions. In Advances In Neural Information Processing
 Systems, pp. 3045–3053, 2016.
 
-[6] Stefano V. Albrecht and Peter Stone. Reasoning about Hypothetical Agent Behaviours and their Parameters. In AAMAS '17, International Foundation for Autonomous Agents and Multiagent Systems, 547–555.
 
-[7] Shafipour Yourdshahi, E., do Carmo Alves, M.A., Varma, A. et al. On-line estimators for ad-hoc task execution: learning types and parameters of teammates for effective teamwork. Auton Agent Multi-Agent Syst 36, 45 (2022).
+[2] Stefano V. Albrecht and Peter Stone. Reasoning about Hypothetical Agent Behaviours and their Parameters. In AAMAS '17, International Foundation for Autonomous Agents and Multiagent Systems, 547–555.
+
+[3] Shafipour Yourdshahi, E., do Carmo Alves, M.A., Varma, A. et al. On-line estimators for ad-hoc task execution: learning types and parameters of teammates for effective teamwork. Auton Agent Multi-Agent Syst 36, 45 (2022).
 
 
