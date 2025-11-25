@@ -21,20 +21,21 @@ We will clarify this more explicitly in Section 3.
 We provide the corrected lemma and proof sketch as follows: In A TI-OI-Dec-POMDP, for any $Y_A$ and $Y_B$, $Y_A\subseteq Y_B$, if
     $H(X_e| Y_A \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})    \leq H(X_e| Y_B \cup \{Y_j\})- H(X_e|Z, Y_B \cup \{Y_j\})$, then $I(Z;Y_A)$ is submodular.
 
-**Revised proof** We aim to show that $I(Z;Y_A)$ is submodular. From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, we only need to prove that $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular since $-H(X_e) + H(Z)$ is a constant. Let  $\Omega = \{Y_i, i \in \mathcal{N}\}$ be the set of observations for all agents. $Y_A\subset Y_B\subset \Omega$, and $Y_j \in \Omega\setminus Y_B$. If $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular, then it satisfies 
+**Revised proof**  From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, 
+Consider the ratio 
+$    \frac{I(Z;Y_A) }{ I(X_e; Y_A )}=  1 - \frac{H(X_e) - H(Z) - H(X_e|Z, Y_A)}{ I(X_e; Y_A )}$. 
 
-$I(X_e; Y_A \cup \{Y_j\}) +H(X_e|Z, Y_A \cup \{Y_j\}) - I(X_e; Y_A ) -  H(X_e|Z,Y_A) \geq I(X_e; Y_B \cup \{Y_j\}) +H(X_e|Z, Y_B \cup \{Y_j\}) - I(X_e; Y_B  ) -  H(X_e|Z,Y_B)  $ (Diminishing return property).
+It can be shown that $H(X_e) - H(Z) - H(X_e|Z, Y_A) = I(X_e; Y_A|Z)$  when $Z$ is a deterministic function of $X_e$, (by expanding $I(X_e; Y_A | Z)$ and use the fact that $H(Z|X_e)=0$).
 
-Rearranging the terms, XXXXX
+Let $\epsilon = \max_{Y_A} \frac{I(X_e; Y_A|Z)}{ I(X_e; Y_A )} $. The constant $\epsilon \in (0,1]$ and usually strictly smaller than $1$ when any observation can reveal some information about $Z$. $\epsilon=1$ only when the observation and $Z$ are independent.  
+Then, we can derive an upper and lower bound on  $I(Z; Y_A )$ such that  $$  I(X_e; Y_A )  \ge I(Z; Y_A ) \ge (1- \epsilon)I(X_e; Y_A ),$$
+In other words, $I(Z; Y_A)$ is approximate submodular. (A function $f(S)$ is $\epsilon$-approximate submodular if there is a submodular function $g(S)$ and $\epsilon>0$ such that $(1-\epsilon) g(S)\le f(S) \le (1+\epsilon)g(S)$ for any subset $S$).
 
-This condition intuitively states that the entropy reduction gained from knowing the secret Z should not decrease as more information is collected. The proof is as follows. 
+Based on the approximate submodularity, Ref. [1] show that the greedy algorithm achieves a 
+$\left(1 - \frac{1}{e} - O(\delta)\right)$ approximation 
+ratio when $\epsilon = \frac{\delta}{k}$ where $k$ is the number of elements selected.
 
-Expand the mutual information, we have
-$H(X_e| Y_A \cup \{Y_j\}) - H(X_e| Y_B \cup \{Y_j\}) \leq H(X_e|Z, Y_A \cup \{Y_j\}) - H(X_e|Z, Y_B \cup \{Y_j\})$
-
-By moving the terms, we obtain the   condition $$- H(X_e|Z, Y_A \cup \{Y_j\}) + H(X_e| Y_A \cup \{Y_j\}) \leq - H(X_e|Z, Y_B \cup \{Y_j\}) + H(X_e| Y_B \cup \{Y_j\})$$.
-
-    * In cases when the condition does not hold, equation (6) shows that our objective $I(Z;Y_A)$ is a **monotone (submodular + supermodular) function**. Hence, results from Bai & Bilmes (2018) [4] provide curvature-dependent approximation guarantees for greedymax selection.   Approximate-submodularity results [5] also offer similar performance guarantees. We plan to investigate these directions for the future extension.
+We will revise this lemma and pointed out that in the inference of secret case, the performance bound can be achieved using the greedymax algorithm.
 
 * We thank the reviewer for raising this point.
 In our grid-world model, a sensor returns the *exact* robot location whenever detection occurs (under zero observation noise). Thus, increasing the sensing range increases the probability of detection and therefore always increases information gain. We will clarify this modeling assumption and note that saturation effects may occur in settings where observations are noisy or ambiguous.
@@ -85,7 +86,9 @@ These specifications will allow meaningful comparison against IPG and other base
     
 
 ## References
-[1] Raphen Becker, Shlomo Zilberstein, Victor Lesser, and Claudia V. Goldman. 2004. Solving transition independent decentralized Markov decision processes. J. Artif. Int. Res. 22, 1 (July 2004), 423–455.
+[1] Thibaut Horel and Yaron Singer. Maximization of approximately submodular functions. In Advances In Neural Information Processing Systems, pages 3045–3053, 2016.
+
+Raphen Becker, Shlomo Zilberstein, Victor Lesser, and Claudia V. Goldman. 2004. Solving transition independent decentralized Markov decision processes. J. Artif. Int. Res. 22, 1 (July 2004), 423–455.
 
 [2] Ranjit Nair, Pradeep Varakantham, Milind Tambe, and Makoto Yokoo. 2005. Networked distributed POMDPs: a synergy of distributed constraint optimization and POMDPs. In Proceedings of the 19th international joint conference on Artificial intelligence (IJCAI'05). Morgan Kaufmann Publishers Inc., San Francisco, CA, USA, 1758–1760.
 
