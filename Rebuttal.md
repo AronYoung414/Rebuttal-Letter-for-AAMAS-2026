@@ -4,31 +4,30 @@
 We sincerely thank the reviewer for the careful reading of our paper and the
 positive assessment of both the theoretical contributions and the empirical
 evaluation. We thank the reviewer for recognizing the thoroughness of our
-empirical study. We will further strengthen the presentation in the final version.
+empirical study. We will further strengthen the presentation in the revised manuscript.
 
 ## Reviewer arPd:
-We thank the reviewer for the thoughtful and detailed feedback, and for recognizing the relevance, clarity, and organization of our work. We address all raised concerns below and will incorporate the suggested improvements in the camera-ready version.
+We thank the reviewer for the thoughtful and detailed feedback, and for recognizing the relevance, clarity, and organization of our work. We address all raised concerns below and will incorporate the suggested improvements in the revised manuscript.
 
-* [TI-OI-Dec-POMDPs] We will clarify that our work studies observation-independent Dec-POMDPs. The reviewers are correct that section 3.2 and 3.3 (“Inferring Environment State Sequence” and “Estimating Environment Secrets”) assume both transition-independence and observation-independence. We will highlight the assumptions in the introduction.  Section 3.1 (“Inferring Latent State Sequence”) does not require transition independence, and only assumes only conditional independence of observations (Assumption 1).  We will clarify this distinction in the revision.
+* [TI-OI-Dec-POMDPs] We will clarify that our work studies observation-independent Dec-POMDPs in the introduction and preliminary. The reviewers are correct that section 3.2 and 3.3 (“Inferring Environment State Sequence” and “Estimating Environment Secrets”) assume both transition-independence and observation-independence. We will highlight the assumptions in the introduction.  Section 3.1 (“Inferring Latent State Sequence”) does not require transition independence, and only assumes only conditional independence of observations (Assumption 1).  We will clarify this distinction in the revision.
 
- Such assumptions are widely used in several Dec-POMDP subclasses, including ND-POMDPs and TI-OI-Dec-POMDPs, as introduced in prior literature [1,2] and summarized in the survey [3].
-
-* In section 3.2 and 3.3, due to both transition and observation independence, the dec-POMDP model with a reduced agent set can be easily constructed. We will clarify this definition in the revision.  In section 3.1,
-we do not need to redefine a transition model for a reduced agent set because
-when selecting a subset of agents (K), the *other* agents still act according to their policies and participate in the transition dynamics, but  their observations are excluded from the inference objective. For example, suppose the system has 5 agents and (K={1,2,4}), all 5 agents execute their respective policies and evolve under the joint transition model, while only the observation histories of agents 1,2,4 used for the perception objective ( reducing the joint-state trajectory estimation $H(\cdot|Y_K)$ using the agents 1,2,4's observations).
+* In section 3.2 and 3.3, due to both transition and observation independence, the dec-POMDP model with a reduced agent set can be easily constructed. We will clarify this definition in the revision.  In section 3.1, we do not need to redefine a transition model for a reduced agent set because
+when selecting a subset of agents (K), the *other* agents still act according to their policies and participate in the transition dynamics, but  their observations are excluded from the inference objective. For example, suppose the system has 5 agents and a subset (K={1,2,4}) of agents are used for active joint state estimation, all 5 agents execute their respective policies and evolve under the joint transition model, while only the observation histories of agents 1,2,4 are used for the perception objective, that is, computing the joint-state trajectory estimation  using the agents 1,2,4's observations. 
 We will clarify this more explicitly in Section 3.
 
-* We appreciate the reviewer pointing out the issue in the proof. Indeed, while $H(X_e | Z, Y_A)$ is **supermodular**, equation (6) shows that
-$$
-I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A),
-$$
-so establishing submodularity in $I(Z;Y_A) $ requires further assumption.
+* [Revised Proof of Lemma 3] We appreciate the reviewer pointing out the issue in the proof of Lemma 3. Indeed, while $H(X_e | Z, Y_A)$ is **supermodular**, equation (6) shows that
+  $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$ so establishing submodularity in $I(Z;Y_A)$ requires further assumption.
 
-We provide the corrected lemma and proof as follows:  that is: Under the assumption that for any $Y_A$ and $Y_B$, $Y_A\subseteq Y_B$, if
-    $H(X_e| Y_A \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})    \leq H(X_e| Y_B \cup \{Y_j\})- H(X_e|Z, Y_B \cup \{Y_j\})   $, then $I(Z;Y_A)$ is submodular.
+We provide the corrected lemma and proof sketch as follows: In A TI-OI-Dec-POMDP, for any $Y_A$ and $Y_B$, $Y_A\subseteq Y_B$, if
+    $H(X_e| Y_A \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})    \leq H(X_e| Y_B \cup \{Y_j\})- H(X_e|Z, Y_B \cup \{Y_j\})$, then $I(Z;Y_A)$ is submodular.
 
+**Revised proof** We aim to show that $I(Z;Y_A)$ is submodular. From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, we only need to prove that $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular since $-H(X_e) + H(Z)$ is a constant. Let  $\Omega = \{Y_i, i \in \mathcal{N}\}$ be the set of observations for all agents. $Y_A\subset Y_B\subset \Omega$, and $Y_j \in \Omega\setminus Y_B$. If $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular, then it satisfies 
 
-This condition intuitively states that the entropy reduction gained from knowing the secret Z should not decrease as more information is collected. The proof is as follows. We aim to show that $I(Z;Y_A)$ is submodular. From the equation (6) $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$ in the paper, we only need to prove that $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular since $- H(X_e) + H(Z)$ is a constant. Let  $\Omega = \{Y_i, i \in \mathcal{N}\}$ be the set of observations for all agents. $Y_A\subset Y_B\subset \Omega$, and $Y_j \in \Omega\setminus Y_B$. If $I(X_e;Y_A) + H(X_e|Z,Y_A)$ is submodular, it satisfies $I(X_e; Y_A \cup \{Y_j\}) - I(X_e; Y_A \cup \{Y_j\}) \geq H(X_e|Z, Y_B \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})$.
+$I(X_e; Y_A \cup \{Y_j\}) +H(X_e|Z, Y_A \cup \{Y_j\}) - I(X_e; Y_A ) -  H(X_e|Z,Y_A) \geq I(X_e; Y_B \cup \{Y_j\}) +H(X_e|Z, Y_B \cup \{Y_j\}) - I(X_e; Y_B  ) -  H(X_e|Z,Y_B)  $ (Diminishing return property).
+
+Rearranging the terms, XXXXX
+
+This condition intuitively states that the entropy reduction gained from knowing the secret Z should not decrease as more information is collected. The proof is as follows. 
 
 Expand the mutual information, we have
 $H(X_e| Y_A \cup \{Y_j\}) - H(X_e| Y_B \cup \{Y_j\}) \leq H(X_e|Z, Y_A \cup \{Y_j\}) - H(X_e|Z, Y_B \cup \{Y_j\})$
