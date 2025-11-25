@@ -15,8 +15,7 @@ We thank the reviewer for the thoughtful and detailed feedback, and for recogniz
 when selecting a subset of agents (K), the *other* agents still act according to their policies and participate in the transition dynamics, but  their observations are excluded from the inference objective. For example, suppose the system has 5 agents and a subset (K={1,2,4}) of agents are used for active joint state estimation, all 5 agents execute their respective policies and evolve under the joint transition model, while only the observation histories of agents 1,2,4 are used for the perception objective, that is, computing the joint-state trajectory estimation  using the agents 1,2,4's observations. 
 We will clarify this more explicitly in Section 3.
 
-* [Revised Proof of Lemma 3] We appreciate the reviewer pointing out the issue in the proof of Lemma 3. Indeed, while $H(X_e | Z, Y_A)$ is **supermodular**, equation (6) shows that
-  $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$ so establishing submodularity in $I(Z;Y_A)$ requires further assumption.
+* [Revised Proof of Lemma 3] We appreciate the reviewer pointing out the issue in the proof of Lemma 3.
 
 We provide the corrected lemma and proof sketch as follows: In A TI-OI-Dec-POMDP, for any $Y_A$ and $Y_B$, $Y_A\subseteq Y_B$, if
     $H(X_e| Y_A \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})    \leq H(X_e| Y_B \cup \{Y_j\})- H(X_e|Z, Y_B \cup \{Y_j\})$, then $I(Z;Y_A)$ is submodular.
