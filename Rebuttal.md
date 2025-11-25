@@ -17,10 +17,11 @@ We will clarify this more explicitly in Section 3.
 
 * [Revised Proof of Lemma 3] We appreciate the reviewer pointing out the issue in the proof of Lemma 3.
 
-We provide the corrected lemma and proof sketch as follows: In A TI-OI-Dec-POMDP, for any $Y_A$ and $Y_B$, $Y_A\subseteq Y_B$, if
-    $H(X_e| Y_A \cup \{Y_j\}) - H(X_e|Z, Y_A \cup \{Y_j\})    \leq H(X_e| Y_B \cup \{Y_j\})- H(X_e|Z, Y_B \cup \{Y_j\})$, then $I(Z;Y_A)$ is submodular.
+We provide the corrected lemma and proof sketch as follows: Lemma 3: ... $
+g(Y_A) \coloneqq I(Z; Y_A).$
+Then the function $g(\cdot)$ is **approximate**-submodular and monotone.
 
-**Revised proof**  From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, 
+**Sketch of proof**  From the equation (6), $I(Z;Y_A) = I(X_e;Y_A) - H(X_e) + H(Z) + H(X_e|Z,Y_A)$, 
 Consider the ratio 
 $    \frac{I(Z;Y_A) }{ I(X_e; Y_A )}=  1 - \frac{H(X_e) - H(Z) - H(X_e|Z, Y_A)}{ I(X_e; Y_A )}$. 
 
