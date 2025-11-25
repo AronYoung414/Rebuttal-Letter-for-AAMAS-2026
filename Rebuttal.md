@@ -3,11 +3,10 @@
 ## Reviewer 7xAW:
 We sincerely thank the reviewer for the careful reading of our paper and the
 positive assessment of both the theoretical contributions and the empirical
-evaluation. We thank the reviewer for recognizing the thoroughness of our
-empirical study. We will further strengthen the presentation in the revised manuscript.
+evaluation. We will further strengthen the presentation in the revised manuscript.
 
 ## Reviewer arPd:
-We thank the reviewer for the thoughtful and detailed feedback, and for recognizing the relevance, clarity, and organization of our work. We address all raised concerns below and will incorporate the suggested improvements in the revised manuscript.
+We thank the reviewer for the detailed feedback. We address all raised concerns below and will incorporate the suggested improvements in the revised manuscript.
 
 * [TI-OI-Dec-POMDPs] We will clarify that our work studies observation-independent Dec-POMDPs in the introduction and preliminary. The reviewers are correct that section 3.2 and 3.3 (“Inferring Environment State Sequence” and “Estimating Environment Secrets”) assume both transition-independence and observation-independence. We will highlight the assumptions in the introduction.  Section 3.1 (“Inferring Latent State Sequence”) does not require transition independence, and only assumes only conditional independence of observations (Assumption 1).  We will clarify this distinction in the revision.
 
@@ -54,23 +53,20 @@ We will add a clearer explanation of both IPG’s mechanics and why it is the mo
 
 We thank the reviewer for highlighting the limitations of our empirical section and provide clarifications and commitments below.
 
-* We appreciate the reviewer’s detailed feedback on notation clarity. We agree and will revise the paragraph to introduce other symbols for notations. We will change the S and T for the subsets of observations space. We will replace the time index symbol by t consistently throughout and avoid using T as an index.
+* We appreciate the reviewer’s feedback on notation clarity. We will revise the paragraph to introduce other symbols for notations. We will change the S and T for the subsets of observations space. We will replace the time index symbol by t consistently throughout and avoid using T as an index.
 * We will shorten the abstract presentation of submodularity and directly introduce it together with the agent-selection context in Section 3, allocating more space to key proofs.
 * We thank the reviewer for highlighting the limitations of our empirical section and provide clarifications and commitments below. Our primary goal was to evaluate *information gain* under the IMAS² framework in a controlled environment. The binary type-classification task is chosen because:
   * it directly corresponds to inferring the latent discrete variable (Z) in Section 3.3,
   * the classification difficulty increases significantly with stochastic dynamics and limited sensing, and
   * the MI/entropy values (our main theoretical metric) are interpretable (within $[0, 1]$) under binary uncertainty.
-Nevertheless, we agree that richer tasks (multi-class labels, multi-target tracking, or continuous latent variables) would better demonstrate generality. We will expand the discussion and include this limitation explicitly.
+We agree that richer tasks would better demonstrate generality. We will expand the discussion and include this limitation explicitly.
 * We agree additional baselines strengthen empirical context.
-However, algorithms in [2,3] assume reward-based or value-based objectives, or centralized belief updates, which are not compatible with our *information-theoretic* objective and decentralized constraint. Still, we can include the comparison with:
+However, algorithms in [2,3] assume value-based objectives, or centralized belief updates, which are not compatible with our *information-theoretic* objective and decentralized constraint. We can include the comparison with:
   * a random subset selector,
   * a visibility/coverage-based selector, and
   * a fixed-location MI-ranking baseline,
 performance for comparison with IMAS².
-* We agree statistical analysis is essential. In the revision, we can report:
-  * mean ± standard deviation for entropy and accuracy,
-  * per-sensor MI gain variance,
-  * confidence intervals for the classification matrices.
+* In the revision, we can provide statistical analysis.
 * We will also fully specify:
   * number of runs,
   * time horizon (T),
@@ -81,19 +77,10 @@ performance for comparison with IMAS².
   * number of gradient updates per iteration,
   * batch size (M) and horizon (T),
   * total runtime for each method, not only time per iteration.
-These specifications will allow meaningful comparison against IPG and other baselines.
-
-
-
-    
 
 ## References
-[1] Horel, T. and Singer, Y. Maximization of approximately submodular functions. In Advances In Neural Information Processing
-Systems, pp. 3045–3053, 2016.
+[1] Horel, T. and Singer, Y. Maximization of approximately submodular functions. In NeurIPS, pp. 3045–3053, 2016.
 
+[2] S. V. Albrecht and P. Stone. Reasoning about Hypothetical Agent Behaviours and their Parameters. In AAMAS '17, 547–555.
 
-[2] Stefano V. Albrecht and Peter Stone. Reasoning about Hypothetical Agent Behaviours and their Parameters. In AAMAS '17, International Foundation for Autonomous Agents and Multiagent Systems, 547–555.
-
-[3] Shafipour Yourdshahi, E., do Carmo Alves, M.A., Varma, A. et al. On-line estimators for ad-hoc task execution: learning types and parameters of teammates for effective teamwork. Auton Agent Multi-Agent Syst 36, 45 (2022).
-
-
+[3] Yourdshahi et al. On-line estimators for ad-hoc task execution: learning types and parameters of teammates for effective teamwork. AAMAS 36, 45 (2022).
